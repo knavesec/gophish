@@ -77,10 +77,7 @@ func (s *ModelsSuite) TestEmailRequestGenerate(ch *check.C) {
 	}
 
 	s.config.ContactAddress = "test@test.com"
-	expectedHeaders := map[string]string{
-		"X-Mailer":          config.ServerName,
-		"X-Gophish-Contact": s.config.ContactAddress,
-	}
+
 
 	msg := gomail.NewMessage()
 	err := req.Generate(msg)
@@ -101,9 +98,6 @@ func (s *ModelsSuite) TestEmailRequestGenerate(ch *check.C) {
 	ch.Assert(got.Subject, check.Equals, expected.Subject)
 	ch.Assert(string(got.Text), check.Equals, string(expected.Text))
 	ch.Assert(string(got.HTML), check.Equals, string(expected.HTML))
-	for k, v := range expectedHeaders {
-		ch.Assert(got.Headers.Get(k), check.Equals, v)
-	}
 }
 
 func (s *ModelsSuite) TestEmailRequestURLTemplating(ch *check.C) {

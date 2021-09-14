@@ -24,10 +24,6 @@ const (
 	// indicate an error occurred
 	MinHTTPStatusErrorCode = 400
 
-	// SignatureHeader is the name of the HTTP header which contains the
-	// webhook signature
-	SignatureHeader = "X-Gophish-Signature"
-
 	// Sha256Prefix is the prefix that specifies the hashing algorithm used
 	// for the signature
 	Sha256Prefix = "sha256"
@@ -95,7 +91,6 @@ func (ds defaultSender) Send(endPoint EndPoint, data interface{}) error {
 		log.Error(err)
 		return err
 	}
-	req.Header.Set(SignatureHeader, fmt.Sprintf("%s=%s", Sha256Prefix, signat))
 	req.Header.Set("Content-Type", "application/json")
 	resp, err := ds.client.Do(req)
 	if err != nil {
